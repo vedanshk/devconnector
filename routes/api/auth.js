@@ -12,7 +12,7 @@ const express = require(
     router.get('/' , auth , async (req , res)=>
     {
      
-
+      
       try{
 
         const user = await User.findById(req.user.id).select('-password');
@@ -24,7 +24,7 @@ const express = require(
         console.error(error.message);
         res.status(500).send("Internal Server Error");
       }
-      res.json({user});
+    
     
     }
     )
