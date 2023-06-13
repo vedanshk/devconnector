@@ -94,10 +94,52 @@ check('skills', 'Skill should not be empty').notEmpty()
     
   }
 
+});
 
+// @router get api/profile/
+// @desc    Get  all profile
+
+// @access  Public
+router.get('/' , async(req , res)=>{
+
+  try {
+    const profile = await Profile.find().populate('user' , ['name' , 'avatar']);
+
+    res.json(profile);
+
+  } catch (error) {
+    
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+
+  }
 
 
 });
+// @router get api/profile/
+// @desc    Get profile using userid 
+
+// @access  Public
+router.get('/user/:user_id' , async(req , res)=>{
+
+  try {
+    const profile = await Profile.findOne({user: req.params.user_id}).populate('user' , ['name' , 'avatar']);
+
+    if(!profile){
+      return res.status(400).json({msg: 'There is no profile for this user'});
+    }
+
+    res.json(profile);
+                           
+  } catch (error) {
+    
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+
+  }
+
+});
+
 
 
 
